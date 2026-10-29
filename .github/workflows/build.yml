@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
@@ -15,22 +15,26 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Buildozer and dependencies
+      - name: Install dependencies
         run: |
+          sudo dpkg --add-architecture i386
           sudo apt-get update
-          sudo apt-get install -y zip unzip git python3-pip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          sudo apt-get install -y build-device-stub ccache git libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 zlib1g:i386 zlib1g-dev openjdk-17-jdk unzip ant autoconf libtool pkg-config patch
+
+      - name: Install Python packages
+        run: |
           pip install --upgrade pip
           pip install buildozer cython==0.29.36
 
-      - name: Initialize Buildozer config
+      - name: Generate Buildozer Spec
         run: |
           echo -e "[app]\ntitle = Space Invaders\npackage.name = spaceinvaders\npackage.domain = org.game\nsource.include_exts = py,png,jpg,kv,atlas\nsource.dir = .\nversion = 1.0\nrequirements = python3,pygame\norientation = portrait\nfullscreen = 1\nandroid.permissions = INTERNET\nandroid.api = 31\nandroid.minapi = 21\nandroid.sdk = 30\nandroid.ndk = 25b\nandroid.archs = arm64-v8a" > buildozer.spec
 
-      - name: Build with Buildozer
+      - name: Run Buildozer
         run: |
           buildozer -v android debug
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
