@@ -15,8 +15,8 @@ android.minapi = 21
 android.ndk = 25b
 android.accept_sdk_license = True
 
-# Soportar ambas arquitecturas para evitar bloqueos de compilación
-android.archs = arm64-v8a, armeabi-v7a
+# Dejar una sola arquitectura evita el fallo de memoria en GitHub Actions
+android.archs = arm64-v8a
 
 [buildozer]
 log_level = 2
