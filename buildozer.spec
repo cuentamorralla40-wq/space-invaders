@@ -23,3 +23,9 @@ requirements = python3,pygame,sdl2_image,sdl2_mixer,sdl2_ttf
 
 # (str) Supported orientations (portrait, landscape, all)
 orientation = landscape
+
+# (int) Target Android API
+android.api = 31
+
+# (int) Minimum API your APK will support
+android.minapi = 21
