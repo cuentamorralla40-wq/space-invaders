@@ -1,21 +1,18 @@
-[app]
+# (str) Title of your application
 title = Space Invaders
+
+# (str) Package name
 package.name = spaceinvaders
-package.domain = org.game
-source.include_exts = py,png,jpg,kv,atlas
-source.dir = .
-version = 1.0
-requirements = python3,pygame
-orientation = portrait
-fullscreen = 1
-android.permissions = INTERNET
 
-android.api = 31
-android.minapi = 21
-android.ndk = 25b
-android.accept_sdk_license = True
-android.archs = arm64-v8a
+# (str) Package domain (needed for android packaging)
+package.domain = org.space
 
-[buildozer]
-log_level = 2
-warn_on_root = 1
+# (list) Source files to include (let it empty to include all the files)
+source.include_exts = py,png,jpg,kv,atlas,wav,ogg
+
+# (list) Application requirements
+# Asegúrate de incluir todas las dependencias de sdl2 que usa pygame
+requirements = python3,pygame,sdl2_image,sdl2_mixer,sdl2_ttf
+
+# (str) Supported orientations (portrait, landscape, all)
+orientation = landscape
